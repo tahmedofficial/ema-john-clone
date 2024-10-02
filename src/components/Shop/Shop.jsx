@@ -11,8 +11,16 @@ const Shop = () => {
     const [cart, setCart] = useState([])
     const axiosSecure = useAxios();
     const [count, setCount] = useState({});
+    const itemsPerPage = 10;
+    const numberOfPage = Math.ceil(count / itemsPerPage);
+    const pages = [...Array(numberOfPage).keys()];
 
-    console.log(count);
+    // for (let i = 0; i < numberOfPage; i++) {
+    //     pages.push(i);
+    // }
+
+    console.log(pages);
+
 
     useEffect(() => {
         axiosSecure.get("/productsCount")
@@ -92,6 +100,11 @@ const Shop = () => {
                         <button className='btn-proceed'>Review Order</button>
                     </Link>
                 </Cart>
+            </div>
+            <div className='pagination'>
+                {
+                    pages.map(page => <button key={page}>{page}</button>)
+                }
             </div>
         </div>
     );
