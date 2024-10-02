@@ -4,15 +4,26 @@ import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
 import './Shop.css';
 import { Link } from 'react-router-dom';
+import useAxios from '../../hooks/useAxios';
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([])
+    const axiosSecure = useAxios();
+    const [count, setCount] = useState({});
+
+    console.log(count);
 
     useEffect(() => {
-        fetch('http://localhost:5000/products')
-            .then(res => res.json())
-            .then(data => setProducts(data))
+        axiosSecure.get("/productsCount")
+            .then(res => {
+                setCount(res.data?.count)
+            })
+    }, [])
+
+    useEffect(() => {
+        axiosSecure.get("/products")
+            .then(res => setProducts(res.data));
     }, []);
 
     useEffect(() => {
