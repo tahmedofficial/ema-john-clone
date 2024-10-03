@@ -9,17 +9,19 @@ import useAxios from '../../hooks/useAxios';
 const Shop = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([])
+    const [itemsPerPage, setItemsPerPage] = useState(10);
     const axiosSecure = useAxios();
     const [count, setCount] = useState({});
-    const itemsPerPage = 10;
     const numberOfPage = Math.ceil(count / itemsPerPage);
-    const pages = [...Array(numberOfPage).keys()];
+    // const pages = [...Array(numberOfPage).keys()];
 
-    // for (let i = 0; i < numberOfPage; i++) {
-    //     pages.push(i);
-    // }
+    const pages = [];
 
-    console.log(pages);
+    for (let i = 0; i < numberOfPage; i++) {
+        pages.push(i);
+    }
+
+    // console.log(pages);
 
 
     useEffect(() => {
@@ -80,6 +82,10 @@ const Shop = () => {
         deleteShoppingCart();
     }
 
+    const handleItemsPerPage = (e) => {
+        setItemsPerPage(parseInt(e.target.value))
+    }
+
     return (
         <div className='shop-container'>
             <div className="products-container">
@@ -105,6 +111,12 @@ const Shop = () => {
                 {
                     pages.map(page => <button key={page}>{page}</button>)
                 }
+                <select value={itemsPerPage} onChange={handleItemsPerPage} name="" id="">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>
             </div>
         </div>
     );
