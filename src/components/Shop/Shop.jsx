@@ -33,9 +33,9 @@ const Shop = () => {
     }, [])
 
     useEffect(() => {
-        axiosSecure.get("/products")
+        axiosSecure.get(`/products?page=${currentPage}&size=${itemsPerPage}`)
             .then(res => setProducts(res.data));
-    }, []);
+    }, [currentPage, itemsPerPage]);
 
     useEffect(() => {
         const storedCart = getShoppingCart();
